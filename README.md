@@ -24,3 +24,4 @@ accessed at http://localhost:3000.
    - Add build script
 
 
+Mapping demo using Leaflet, React and Django
