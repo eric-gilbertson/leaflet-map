@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+	width: 600px;
+}
+
+.leaflet-container {
+    width: 100%;
+    height:calc(100vh - 60px);
+}
+
+.pwe-map {
+    position: relative;
+    border: 1px solid red;
+    height:calc(100vh - 60px);
+    width:100%;
+}
+
+.pwe-map-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 100px
+    height: 20px;
+    border: 1px solid blue;
+    color: yellow;
+    z-index: 9999;
+}
+
+.app-title {
+    font-weight: 400;
+    font-size: 30px;
+    color: #adadad;
+}
+
+.app-title {
+    text-align: center;
+}
+
+.energy-table  th span.sort-asc:before {
+   content:  '\25b2';
+}
+.energy-table  th span.sort-desc:before {
+   content:  '\25bc';
+}
+.energy-table  th span:before {
+   width: 20px;
+   display: inline-block;
+   content:  '\25c6';
+}
+
+header {
+    position: relative;
+    height:60px;
+    background-color: rgb(255, 150, 46);
+    }
+
+header > div {
+    position: absolute;
+    font-size: 20px;
+    top: 15px;
+    left:25px;
+    color: white;
+}
+
+form {
+    padding: 0 10px 15px 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.items-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.items-list li {
+    border-top: 1px solid #ddd;
+    padding: 5px;
+}
+
+.items-list li span {
+    float: right;
+    font-weight: bold;
+}
+
+.items-list li .positive {
+    color: #3dab3d;
+}
+
+.items-list li span.negative {
+    color: #e86464;
+}
+
+.items-list .no-items {
+    text-align: center;
+    color: #ddd;
+}
