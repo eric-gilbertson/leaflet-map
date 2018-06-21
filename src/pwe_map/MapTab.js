@@ -16,7 +16,7 @@ class MapTab extends Component {
       super(props);
  
       this.state = {
-          mapType: 'google',
+          mapType: 'leaflet',
       }
 
       this.pickMap = function(mapType, event) {
