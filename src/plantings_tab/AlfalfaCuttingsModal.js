@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, FormGroup, Row, Col, Button, Modal, OverlayTrigger } from 'react-bootstrap/lib';
+import { Button, Modal} from 'react-bootstrap/lib';
 var DatePicker = require("react-bootstrap-date-picker");
 
 // list of date/number pairs.
@@ -56,7 +56,7 @@ class AlfalfaCuttingsModal extends Component {
 
            // value must be an int or null, else React complains
            if (tname === 'drying_days') {
-               tvalue = tvalue === '' ? null : parseInt(tvalue);
+               tvalue = tvalue === '' ? null : parseInt(tvalue, 10);
            }
 
            newCuttings[rowNum][tname] = tvalue;

@@ -13,7 +13,10 @@ Note that the project also contains the actions & reducers needed to store state
 in a Redux store but these functions are not currently being used.
 
 The project can be invoked using runit.sh. Once started the interface can be
-accessed at http://localhost:3000.
+accessed at http://localhost:3000. The server for this project lives
+at: /Users/Barbara/src/ambient_demo/server.
+
+
 
 1) TODOS:
    - Implement Redux based state

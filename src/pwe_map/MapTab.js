@@ -4,12 +4,14 @@
  * page, e.g no Ajax request for it.
  */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Alert, DropdownButton, MenuItem, ButtonToolbar, Panel, PanelGroup, Button, Grid, Row, Col } from 'react-bootstrap/lib';
 
+import {AddPumpPanel} from './AddPumpPanel';
+import {EquipmentItemModal} from './EquipmentItemModal';
 import {MapContainer} from './MapContainer';
+import {hideEquipmentItemModal, getEquipmentList} from './MapActions';
+
 
 class MapTab extends Component {
     constructor(props) {
@@ -24,7 +26,7 @@ class MapTab extends Component {
       }
 
       this._handleMapType = function(mapType, event) {
-        this.setState({mapType: mapType});
+        //this.setState({mapType: mapType});
         console.log("handle map type: ", mapType);
       }
       this._handleMapType = this._handleMapType.bind(this);
@@ -36,12 +38,20 @@ class MapTab extends Component {
        return true;
     }
 
+    componentDidMount() {
+        console.log('xxxxxxxxxx MapTab::componentDidMount');
+        this.props.fetchEquipment();
+    }
+
     componentWillReceiveProps(nextProps) {
     }
 
     render() {
         return(
-           <MapContainer mapType={this.state.mapType} mapTypeCallback={this._handleMapType} />
+          <div className='mapTab'>
+           <EquipmentItemModal equipmentItem={this.props.equipmentItem} showIt={this.props.showEquipmentItemModal} onClose={this.props.clearModal} className='myModal' />
+           <MapContainer equipmentList={this.props.equipmentList} mapType={this.state.mapType} mapTypeCallback={this._handleMapType} />
+          </div>
         )
     }
 }
@@ -52,10 +62,19 @@ MapTab.propTypes = {
 }
 
 const mapStateToProps = (state) => {
+    console.log('MapTab, mstp: ',    state.equipmentInfo);
+    return {
+        equipmentList: state.equipmentInfo.equipmentList,
+        equipmentItem: state.equipmentInfo.equipmentItem,
+        showEquipmentItemModal: state.equipmentInfo.showEquipmentItemModal,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        fetchEquipment: () => dispatch(getEquipmentList()),
+        clearModal: () => dispatch(hideEquipmentItemModal()),
+    };
 };
 
 export {MapTab};

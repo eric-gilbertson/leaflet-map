@@ -4,14 +4,12 @@
  * page, e.g no Ajax request for it.
  */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Alert, ButtonToolbar, Panel, PanelGroup, Button, Grid, Row, Col } from 'react-bootstrap/lib';
+import { Alert, Panel, PanelGroup, Button, Grid, Row} from 'react-bootstrap/lib';
 
 import { BlockName } from './BlockName';
 import { KCTable } from './KCTable';
-import { PlantingsList } from './PlantingsList';
 import { CanopyShadingModal } from './CanopyShadingModal';
 import { AgeFactor } from './AgeFactor';
 import { MaxCanopyMeasure } from './MaxCanopyMeasure';
@@ -20,7 +18,7 @@ import { AlfalfaCuttingsModal } from './AlfalfaCuttingsModal';
 import { AddPlantingModal } from './AddPlantingModal';
 import PlantingDetail from './PlantingDetail';
 import {
-  updatePlantingBloomDate, saveCanopyPercentShading, getPlantingInfoDone, 
+  updatePlantingBloomDate, saveCanopyPercentShading,
   getPlantingInfo, savePlantingInfo, saveCuttingsInfo, updatePlantingInfo,
   clearPlantingInfoStatusMsg, deletePlantingInfo,
 } from './PlantingsActions';
@@ -134,7 +132,7 @@ class PlantingsTab extends Component {
 
           //NOTE: assumes user cant delete last planting, e.g always another.
           let plantings = this.state.blockInfo.plantings;
-          let isFirst  = plantings[0].planting_id == plantingId;
+          let isFirst  = plantings[0].planting_id === plantingId;
           let replacementPlanting = plantings[isFirst ? 1 : 0];
           this.props.deletePlanting(plantingId);
           let blockId = this.state.blockInfo.blocks[0].id;
@@ -145,7 +143,7 @@ class PlantingsTab extends Component {
       this._onKCChange = function(event) {
           let name = event.target.name;
           let value = event.target.value;
-          console.log("KC change: ", rowNum, ", ", name, ", ", value);
+          console.log("KC change: ", ", ", name, ", ", value);
 
           // Usually get row from target but it is provided directly for 
           // the date picker.
@@ -212,8 +210,8 @@ class PlantingsTab extends Component {
 
           let target = event.target;
           let newInfo = Object.assign({}, this.props.plantingInfo);
-          let newValue = target.value
           //Must special case checkboxes.
+          let newValue = null;
           if (target.name === 'using_partial_irrigation') {
               newValue = target.checked;
           }
@@ -258,7 +256,7 @@ class PlantingsTab extends Component {
           let newPlanting = null;
           let plantings =  this.state.blockInfo.plantings;
           for (let i=0; !newPlanting && i < plantings.length; i++) {
-              if (plantings[i].planting_id == plantingId) {
+              if (plantings[i].planting_id === plantingId) {
                   newPlanting = plantings[i];
               }
           }
@@ -279,7 +277,6 @@ class PlantingsTab extends Component {
 
     handleCropChange(event) {
         console.log("crop change: ", event.target.value);
-        let newVal = event.target.value;
     }
 
     handleSelect(activeKey) {
@@ -297,7 +294,7 @@ class PlantingsTab extends Component {
     componentWillReceiveProps(nextProps) {
         let nextId = nextProps.blockInfo.blocks[0].id;
         let currId =  this.state.blockInfo.blocks[0].id;
-        if (nextId != currId) {
+        if (nextId !== currId) {
             console.log("update block: ", nextId, ", ", nextId);
             this.setState({blockInfo : nextProps.blockInfo});
         }
@@ -311,19 +308,16 @@ class PlantingsTab extends Component {
 
     render() {
        let myBlockInfo = this.props.blockInfo ? this.props.blockInfo : this.props.blockInfo;
-       if (!myBlockInfo || !myBlockInfo.blocks || myBlockInfo.blocks.length == 0 || myBlockInfo.blocks[0].name === undefined) {
+       if (!myBlockInfo || !myBlockInfo.blocks || myBlockInfo.blocks.length === 0 || myBlockInfo.blocks[0].name === undefined) {
            return (`Loading.... `);
        }
 
        let myBlock = myBlockInfo.blocks[0];
-       let myPlantings = myBlockInfo.plantings;
-       let myRanches = myBlockInfo.ranches;
        let plantingInfo = this.props.plantingInfo ? this.props.plantingInfo : {};
 
        let isOrchardCrop = plantingInfo.crop_class === 'Orchard';
        let isVineCrop = plantingInfo.crop_class === 'Vine';
        let cropStageList = plantingInfo.crop_stage_list;
-       let isIrrigationConfigured = myBlock.is_irrigation_config_finished;
        //let isReadonly = plantingInfo.planting_id != myPlantings[0].planting_id;
        //TODO: figure out rule for this flag.
        let isReadonly = false;
@@ -467,7 +461,7 @@ const mapStateToProps = (state) => {
     // current data. Must test all permutations of view,edit,save & cancel
     // if this logic is changed (on both the current and old plantings).
     let pi = state.plantingInfo;
-    if (pi.block_id != state.blockInfo.blocks[0].id) {
+    if (pi.block_id !== state.blockInfo.blocks[0].id) {
         console.log(`load new block: -${pi.block_id}-, -${state.blockInfo.blocks[0].id}-`);
         pi =  state.blockInfo.active_planting;
         pi.block_id = state.blockInfo.blocks[0].id;

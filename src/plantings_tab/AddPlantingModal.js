@@ -40,17 +40,17 @@ class AddPlantingModal extends Component {
            if (cropTypeChange) {
                newState.cropYear = this._findCropYear(crop);
                let days = crop && crop.season_length ? crop.season_length : null;
-               newState.seasonDays = typeof(days) === 'string' ? parseInt(days) : days;
+               newState.seasonDays = typeof(days) === 'string' ? parseInt(days, 10) : days;
                
            } else if (seasonDaysChange) {
                let val = event.target.value;
-               newState.seasonDays = val.length > 0 ? parseInt(val) : 0; 
+               newState.seasonDays = val.length > 0 ? parseInt(val, 10) : 0; 
            }
 
            if (seasonDaysChange || cropTypeChange || event.target.name === 'plantingDate') {
                let newDate = '';
                if (newState.plantingDate && newState.plantingDate.length > 0) {
-                   newDate = new Date(Date.parse(newState.plantingDate) + parseInt(newState.seasonDays) * DAYS_TO_MILLISECONDS).toLocaleDateString();
+                   newDate = new Date(Date.parse(newState.plantingDate) + parseInt(newState.seasonDays, 10) * DAYS_TO_MILLISECONDS).toLocaleDateString();
                }
                newState.harvestDate = newDate;
            }

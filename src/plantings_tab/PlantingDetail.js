@@ -1,11 +1,9 @@
 /* Description:
  * Dislays the details associated with the active planting.
  */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { FormGroup, Button, Alert, Row, Col } from 'react-bootstrap/lib';
+import { Alert, Row, Col } from 'react-bootstrap/lib';
 import {CROP_TYPES} from "./CropTypes";
 import CROP_INFO from "./CropClassIrrigationMappings";
 var DatePicker = require("react-bootstrap-date-picker");
@@ -85,12 +83,11 @@ const IrrigationGroup = ({isReadonly, cropType, planting, onInputChange}) => {
     let isVineCrop = planting.crop_class === 'Vine';
     let isRowCrop = planting.crop_class === 'Row';
     let rowCropDisplay = isRowCrop ? 'block' : 'none';
-    let showIrrigation = planting.is_configuration_finished;
     let applicationRateIsGallons = planting.application_rate_units.indexOf('gal_per_hr_per_') === 0;
     let showIrrigationStrategy = false;
     let canSchedule = cropType.can_schedule;
     let irrigationType = planting.irrigation_system_type;
-    let showDripTapes = irrigationType === 'drip' || irrigationType === 'subsurface_drip' && isRowCrop;
+    let showDripTapes = (irrigationType === 'drip' || irrigationType === 'subsurface_drip') && isRowCrop;
     let showGallonsPerHour = irrigationType !== 'flood';
 
     let irrigationTypes = CROP_INFO[planting.crop_class.toLowerCase()];
@@ -144,7 +141,7 @@ const IrrigationGroup = ({isReadonly, cropType, planting, onInputChange}) => {
             <input disabled={isReadonly} type="number" name="application_rate" onChange={onInputChange} value={planting.application_rate} className="form-control" min="0" max="100" step="1" />
             {showGallonsPerHour && 
                 <label className="text-left" style={{'paddingLeft': '5px'}}>
-                    <input disabled={isReadonly} onChange={onInputChange} type="radio" name="application_rate_units"   onChange={onInputChange} value="gal_per_hr_per_tree" checked={ (applicationRateIsGallons ? true : false)} /> gal / hr{treeRateSuffix}
+                    <input disabled={isReadonly} type="radio" name="application_rate_units"   onChange={onInputChange} value="gal_per_hr_per_tree" checked={ (applicationRateIsGallons ? true : false)} /> gal / hr{treeRateSuffix}
                 </label>
             }
             <label className="text-left" style={{"paddingLeft": "5px"}}>
@@ -175,7 +172,7 @@ IrrigationGroup.propTypes = {
 
 const IrrigationSummary = ({planting}) => {
     //Always parse so that we get an int.
-    let rateVal = parseInt(planting.rate_gpm);
+    let rateVal = parseInt(planting.rate_gpm, 10);
     rateVal = isNaN(rateVal) ? 'Unknown' : rateVal;
 
    return(

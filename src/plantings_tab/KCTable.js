@@ -1,9 +1,8 @@
 /* Description:
  * Dislays the details associated with the active planting.
  */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Button} from 'react-bootstrap/lib';
 var DatePicker = require("react-bootstrap-date-picker");
 
     

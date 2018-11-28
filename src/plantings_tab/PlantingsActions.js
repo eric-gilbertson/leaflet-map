@@ -309,7 +309,7 @@ export function savePlantingInfo(plantingInfo, blockInfo) {
         options.headers['X-CSRFToken'] = getCsrfToken();
         options.body = JSON.stringify(updateData);
 
-        if (targetId == -1) {
+        if (targetId === -1) {
             targetId = blockId;
             url = `/irrigation/plantings/block/${targetId}/`;
             options.method = "POST";
@@ -374,7 +374,6 @@ export function saveCuttingsInfo(planting, cuttingsList) {
 
     return (dispatch) => {
         let url = `/irrigation/plantings/${plantingId}/update_cuttings/`;
-        let updateMethod = "PUT";
 
         let  options = {...PUT_OPTIONS};
         options.headers['X-CSRFToken'] = getCsrfToken();
@@ -419,7 +418,7 @@ export function saveCanopyPercentShading(planting, percentShade, startDate) {
         'stage_index' : -1,
         'current_crop_stages' : planting.crop_stage_list,
         'field_updated': 'new',
-        'new_canopy_measure': parseInt(percentShade),
+        'new_canopy_measure': parseInt(percentShade, 10),
         'date_updated': localDate
     };
 
