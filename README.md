@@ -1,7 +1,7 @@
-                             PowWow Energy Display
+                             Energy Display App
 
 0) Introduction
-This project implements the Powwow energy display app implemented with React
+This project implements demo app implemented with React
 and Bootstrap. It was created using yarn & create-react-app. It contains 
 the following objects:
 
